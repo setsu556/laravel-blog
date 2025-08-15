@@ -5,3 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 // ブログ一覧画面を表示
 Route::get('/', [BlogController::class, 'showList'])->name('blogs');
+// ブログ詳細画面を表示
+Route::get('/blog/{id}', [BlogController::class, 'showDetail'])->name('show');

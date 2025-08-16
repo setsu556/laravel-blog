@@ -63,13 +63,12 @@ class BlogController extends Controller
         // リクエストのデータを受け取る
         $inputs = $request->all();
 
-        DB::beginTransaction();
         try {
-            // ブログを登録
-            Blog::create($inputs);
-            DB::commit();
+            DB::transaction(function () use ($inputs) {
+                // ブログを登録
+                Blog::create($inputs);
+            });
         } catch (Throwable) {
-            DB::rollBack();
             abort(500);
         }
 

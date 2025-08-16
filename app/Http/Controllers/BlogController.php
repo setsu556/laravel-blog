@@ -8,7 +8,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use Throwable;
 
 class BlogController extends Controller
 {
@@ -29,12 +31,12 @@ class BlogController extends Controller
      * @param $id
      * @return RedirectResponse|View
      */
-    public function showDetail($id)
+    public function showDetail($id): View|RedirectResponse
     {
         $blog = Blog::find($id);
 
         if (is_null($blog)) {
-            \Session::flash('err_msg', 'データがありません。');
+            Session::flash('err_msg', 'データがありません。');
             return redirect(route('blogs'));
         }
 
@@ -66,13 +68,13 @@ class BlogController extends Controller
             // ブログを登録
             Blog::create($inputs);
             DB::commit();
-        } catch (\Throwable $e) {
+        } catch (Throwable) {
             DB::rollBack();
             abort(500);
         }
 
 
-        \Session::flash('err_msg', 'ブログを登録しました。');
+        Session::flash('err_msg', 'ブログを登録しました。');
         return redirect(route('blogs'));
     }
 }

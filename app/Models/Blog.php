@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin Builder
+ */
 class Blog extends Model
 {
     use HasFactory;
@@ -13,5 +17,5 @@ class Blog extends Model
     protected $table = 'blogs';
 
     // 可変項目
-    protected $fillable = ['title','content'];
+    protected $fillable = ['title', 'content'];
 }
